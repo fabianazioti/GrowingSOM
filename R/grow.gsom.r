@@ -65,7 +65,7 @@ grow.gsom <- function(gsom_model, df, repet, spreadFactor, alpha, beta, gridsize
   
   if(repet > lentr) stop("Max nr of iterations exceeded.")
   
-  currtrain <- matrix(0, nrow=lentr, ncol=5)
+  currtrain <- matrix(0, nrow=lentr, ncol=6)
   
 	# Call the C function that trains the map
   outc = .C("som_train_loop",
@@ -94,9 +94,9 @@ grow.gsom <- function(gsom_model, df, repet, spreadFactor, alpha, beta, gridsize
   
 	# Process results from C
 
-  training <- matrix(outc$currtrain, ncol=5)
+  training <- matrix(outc$currtrain, ncol=6)
   training <- training[1:repet,]
-  colnames(training) <- c("iteration", "training_stage", "meandist", "num_of_nodes", "nodegrowth")
+  colnames(training) <- c("iteration", "training_stage", "meandist", "num_of_nodes", "nodegrowth", "final")
   
   codes <- matrix(outc$codes, ncol=ncol(df))
   codes <- codes[1:outc$plennd,]

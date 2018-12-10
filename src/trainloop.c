@@ -391,6 +391,8 @@ void som_train_loop(double *df, double *codes, double *distnd, Sint *prep, Sint 
 
 		}
 
+        currtrain[i + 5*lentr] = lennd;
+
 		//Check if Phase should change
 		if((i > 4 && currtrain[i-5 + 3*lentr] >= currtrain[i-1 + 3*lentr]) || (i+1) > (rep/2)){
 			phase = 2;
