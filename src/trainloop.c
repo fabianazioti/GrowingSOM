@@ -46,6 +46,16 @@ void som_train_loop(double *df, double *codes, double *distnd, Sint *prep, Sint 
 	struct nodelist *root, *current, *tnode, *hptr, *hptr2, *newnode, *newnode_f, *prev;
 	double sr = *beta;
 
+	// Export Results
+ 	FILE *fptr;
+
+    	if ((fptr = fopen("/home/fabiana/Documents/INPE/devel/github/CAP-251-Neurocomputacao/positionnodes.txt","w+")) == NULL){
+       		printf("Error! opening file");
+
+       		// Program exits if the file pointer returns NULL.
+       		exit(1);
+    	}
+
 	//Switch neighbourhood condition array if a hexagonal structure is desired for the map
 	if(*hex==1){
 	  w=6;
@@ -63,6 +73,14 @@ void som_train_loop(double *df, double *codes, double *distnd, Sint *prep, Sint 
 	totiter = rep * lendf;
 
 	phase = *grow;
+
+	// Print Initial Nodes Position
+	Rprintf("Initial Nodes: \n");
+    	for(int fzb = 0; fzb < lennd; fzb++)
+    	{
+      		Rprintf(" %d: X %lf Y %lf \n", fzb+1, npos[fzb], npos[fzb+10000]);
+    	}
+
 
 	// Loop over iterations of the input data
 	for(i = 0; i<rep; i++){
@@ -400,10 +418,25 @@ void som_train_loop(double *df, double *codes, double *distnd, Sint *prep, Sint 
 
 		Rprintf(".");
 
+		for(int fz = 0; fz < lennd; fz++ )
+        	{
+            		//Rprintf("%d: X %lf Y %lf \n", i+1, npos[fz], npos[fz+10000]);
+            		fprintf(fptr,"%d, %lf , %lf\n", i+1, npos[fz], npos[fz+10000]);
+        	}
+
 	}
 
 	//Iteration i is completed
 	Rprintf("\n");
+
+	// Close File Pointer
+	fclose(fptr);
+
+	// Print Last Nodes Position
+   	//for(int fz = 0; fz < lennd; fz++)
+    	//{
+      	    //Rprintf(" %d: X %lf Y %lf \n", fz+1, npos[fz], npos[fz+10000]);
+    	//}
 
 	//Update Return Values
 	*plennd = lennd;
