@@ -49,7 +49,7 @@ void som_train_loop(double *df, double *codes, double *distnd, Sint *prep, Sint 
 	// Export Results
  	FILE *fptr;
 
-    	if ((fptr = fopen("/home/fabiana/Documents/INPE/devel/github/CAP-251-Neurocomputacao/positionnodes.txt","w+")) == NULL){
+    	if ((fptr = fopen("/home/fabiana/Documents/INPE/devel/github/CAP-251-Neurocomputacao/CAP-351/build/positionnodes.txt","w+")) == NULL){
        		printf("Error! opening file");
 
        		// Program exits if the file pointer returns NULL.
